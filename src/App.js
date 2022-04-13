@@ -5,15 +5,13 @@ import Notestate from './context/Notes/notestate';
 import AlertState from './context/Alerts/alertState';
 function App() {
 
-  // let {alert}=useContext(alertcontext);
   return (
     <div className="App">
-        <Notestate>
+      <Notestate>
         <AlertState>
-
-      <Myexport/>
+          <Myexport />
         </AlertState>
-        </Notestate>
+      </Notestate>
     </div>
   );
 }

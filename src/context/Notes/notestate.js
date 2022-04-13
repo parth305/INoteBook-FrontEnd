@@ -2,7 +2,6 @@ import { useState } from "react";
 import notecontext from "./notecontext";
 
 const Notestate=(props)=>{
-
     let s=[
         {
           "_id": "16255596f01ddcd4a6be39d84",
@@ -77,11 +76,37 @@ const Notestate=(props)=>{
           "__v": 0
         }
       ]
+    let a=0;
 
     let [note,setnote]=useState(s);
 
+    //Add note
+
+    let addnote=(n)=>{
+      let newnote={
+        "_id":a,
+        "user_id":"7236",
+        "title":n.title,
+        "description":n.description,
+        "tags":n.tag
+      }
+      a=a+1;
+      setnote(note.concat(newnote))
+    }
+
+    //Delete note
+    let deletenote=(id)=>{
+      let newnote=note.filter((note=>{return note._id!==id}))
+      setnote(newnote)
+      return false
+    }
+    //Edit Note
+    let editnote=()=>{
+
+    }
+
     return (
-        <notecontext.Provider value={{note,setnote}}>
+        <notecontext.Provider value={{note,addnote,deletenote,editnote}}>
             {props.children}
         </notecontext.Provider>
     )

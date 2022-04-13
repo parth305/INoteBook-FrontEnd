@@ -12,7 +12,7 @@ let AlertState=(props)=>{
         })
         setTimeout(() => {
             setalert(null);
-        }, 1500);
+        }, 3000);
     }
     
     return (
