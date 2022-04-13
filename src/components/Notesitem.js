@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import alertcontext from '../context/Alerts/alertcontext';
+import modelcontext from '../context/Model/Modelcontext';
 import notecontext from '../context/Notes/notecontext'
 function Notesitem(props) {
   let {deletenote}=useContext(notecontext);
   let {showalert}=useContext(alertcontext);
+  let {updatemodel}=useContext(modelcontext);
   return (
     
     <div className="card-body">
@@ -17,7 +19,9 @@ function Notesitem(props) {
       else{
         showalert("danger","some error ocuured");
       }}}></i>
-      <i className="fa-solid fa-pen-to-square mx-2"></i>
+      <i className="fa-solid fa-pen-to-square mx-2 " onClick={()=>{
+        console.log(props.note)
+        updatemodel(props.note)}} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
     </div>
   )
 }

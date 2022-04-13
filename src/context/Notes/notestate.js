@@ -4,11 +4,10 @@ import notecontext from "./notecontext";
 const Notestate = (props) => {
 
   let s =[];
-
   let [note, setnote] = useState(s);
 
   let getnotes = async () => {
-    let response=await fetch("http://localhost/api/notes/getnotes", {
+    let response=await fetch("http://localhost:5055/api/notes/getnotes", {
       method: "GET",
       headers: {
         "Content-type": "application/json;",
@@ -19,8 +18,6 @@ const Notestate = (props) => {
     let data=await response.json()
     setnote(data)
   }
-  
-
   //Add note
   let addnote = async (n) => {
     let newnote = {
@@ -28,8 +25,7 @@ const Notestate = (props) => {
       "description": n.description,
       "tags": n.tags
     }
-    // setnote(note.concat(newnote))
-    let response=await fetch("http://localhost/api/notes/addnote", {
+    let response=await fetch("http://localhost:5055/api/notes/addnote", {
       method: "POST",
       body: JSON.stringify(newnote),
       headers: {
@@ -39,16 +35,14 @@ const Notestate = (props) => {
     })
 
     let data=await response.json()
-    // console.log(data)
     getnotes();
 
   }
 
   //Delete note
   let deletenote = async (id) => {
-    let response=await fetch(`http://localhost/api/notes/deletenote/${id}`, {
+    let response=await fetch(`http://localhost:5055/api/notes/deletenote/${id}`, {
       method: "DELETE",
-      // body: JSON.stringify(newnote),
       headers: {
         "Content-type": "application/json",
         "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
@@ -59,9 +53,10 @@ const Notestate = (props) => {
     console.log(data);
     getnotes();
   }
-  //Edit Note
-  let editnote = () => {
 
+  //Edit Note
+  let editnote = (id) => {
+    console.log(id)
   }
 
   return (

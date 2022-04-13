@@ -1,13 +1,15 @@
 import React from 'react'
 import AddNote from './AddNote';
 
+import Model from './Model';
 import Notes from './Notes';
 function Home() {
   return (
     <div className="container my-3">
-      <AddNote/>
+      <Model/>
+      <AddNote />
       <hr />
-      <Notes/>
+      <Notes />
     </div>
 
   )
