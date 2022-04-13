@@ -1,115 +1,74 @@
 import { useState } from "react";
 import notecontext from "./notecontext";
 
-const Notestate=(props)=>{
-    let s=[
-        {
-          "_id": "16255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "26255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "36255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "46255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "56255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "66255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "76255596f01ddcd4a6be39d84",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "regret709",
-          "description": "my life parth 8",
-          "tags": "Genral",
-          "date": "2022-04-12T10:50:23.066Z",
-          "__v": 0
-        },
-        {
-          "_id": "862555e72fc05cc85d590d5c5",
-          "user_id": "6254343e551e1f5f124ef781",
-          "title": "bhyu",
-          "description": "great",
-          "tags": "Genral",
-          "date": "2022-04-12T11:11:46.896Z",
-          "__v": 0
-        }
-      ]
-    let a=0;
+const Notestate = (props) => {
 
-    let [note,setnote]=useState(s);
+  let s =[];
 
-    //Add note
+  let [note, setnote] = useState(s);
 
-    let addnote=(n)=>{
-      let newnote={
-        "_id":a,
-        "user_id":"7236",
-        "title":n.title,
-        "description":n.description,
-        "tags":n.tag
+  let getnotes = async () => {
+    let response=await fetch("http://localhost/api/notes/getnotes", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;",
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
       }
-      a=a+1;
-      setnote(note.concat(newnote))
-    }
+    })
 
-    //Delete note
-    let deletenote=(id)=>{
-      let newnote=note.filter((note=>{return note._id!==id}))
-      setnote(newnote)
-      return false
-    }
-    //Edit Note
-    let editnote=()=>{
+    let data=await response.json()
+    setnote(data)
+  }
+  
 
+  //Add note
+  let addnote = async (n) => {
+    let newnote = {
+      "title": n.title,
+      "description": n.description,
+      "tags": n.tags
     }
+    // setnote(note.concat(newnote))
+    let response=await fetch("http://localhost/api/notes/addnote", {
+      method: "POST",
+      body: JSON.stringify(newnote),
+      headers: {
+        "Content-type": "application/json",
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+      }
+    })
 
-    return (
-        <notecontext.Provider value={{note,addnote,deletenote,editnote}}>
-            {props.children}
-        </notecontext.Provider>
-    )
+    let data=await response.json()
+    // console.log(data)
+    getnotes();
+
+  }
+
+  //Delete note
+  let deletenote = async (id) => {
+    let response=await fetch(`http://localhost/api/notes/deletenote/${id}`, {
+      method: "DELETE",
+      // body: JSON.stringify(newnote),
+      headers: {
+        "Content-type": "application/json",
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+      }
+    })
+
+    let data=await response.json()
+    console.log(data);
+    getnotes();
+  }
+  //Edit Note
+  let editnote = () => {
+
+  }
+
+  return (
+    <notecontext.Provider value={{ note, addnote, deletenote, editnote,getnotes }}>
+      {props.children}
+    </notecontext.Provider>
+  )
 }
 
 export default Notestate

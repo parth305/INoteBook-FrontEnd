@@ -5,7 +5,7 @@ import alertcontext from "../context/Alerts/alertcontext";
 function AddNote() {
     let { showalert } = useContext(alertcontext);
     let {addnote}=useContext(notecontext);
-    let [note,setNote]=useState({ title: "", description: "", tag: "" })
+    let [note,setNote]=useState({ title: "", description: "", tags: "" })
 
     let handleClick = (e) => {
         addnote(note);
@@ -34,7 +34,7 @@ function AddNote() {
                         </div>
                         <h5 className="card-title">Add a Tag</h5>
                         <div className="mb-3">
-                            <textarea className="form-control" id="addtag" name="tag" onChange={Change} rows="1"></textarea>
+                            <textarea className="form-control" id="addtag" name="tags" onChange={Change} rows="1"></textarea>
                         </div>
                         <button id="addbtn" className="btn btn-primary" onClick={handleClick}>Add Note</button>
                     </div>

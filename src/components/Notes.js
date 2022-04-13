@@ -1,9 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Notesitem from './Notesitem';
 import notecontext from '../context/Notes/notecontext'
 
 function Notes() {
-    let {note} = useContext(notecontext);
+    let {note,getnotes} = useContext(notecontext);
+    useEffect(()=>{
+        getnotes();
+    },[])
     return (
         <>
             <h3 className='my-3'>Your Notes</h3>
