@@ -1,11 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Notes from './Notes';
 
 
 function Home() {
-  
-  // console.log(note)
   return (
     <div className="container my-3">
       <h1>

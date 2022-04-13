@@ -1,21 +1,19 @@
 
 import './App.css';
-import Navbar from './components/Navbar'; 
-import Home from './components/Home';
-import About from './components/About';
-import {  Route, Routes } from 'react-router-dom';
+import Myexport from './Myexport';
 import Notestate from './context/Notes/notestate';
-
+import AlertState from './context/Alerts/alertState';
 function App() {
+
+  // let {alert}=useContext(alertcontext);
   return (
     <div className="App">
-      <Notestate>
-      <Navbar />
-        <Routes>
-          <Route exact path='/' element={<Home />}></Route>
-          <Route exact path='/about' element={<About />}></Route>
-        </Routes>
-      </Notestate>
+        <Notestate>
+        <AlertState>
+
+      <Myexport/>
+        </AlertState>
+        </Notestate>
     </div>
   );
 }

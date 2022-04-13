@@ -1,0 +1,25 @@
+import { useState } from "react"
+import alertcontext from "./alertcontext"
+
+let AlertState=(props)=>{
+
+    let [alert,setalert]=useState(null);
+
+    function showalert(type,message){
+        setalert({
+            msg: message,
+            type: type
+        })
+        setTimeout(() => {
+            setalert(null);
+        }, 1500);
+    }
+    
+    return (
+        <alertcontext.Provider value={{alert,showalert}}>
+            {props.children}
+            </alertcontext.Provider>
+    )
+}
+
+export default AlertState
