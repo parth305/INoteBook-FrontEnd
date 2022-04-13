@@ -20,7 +20,6 @@ function Notesitem(props) {
         showalert("danger","some error ocuured");
       }}}></i>
       <i className="fa-solid fa-pen-to-square mx-2 " onClick={()=>{
-        console.log(props.note)
         updatemodel(props.note)}} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
     </div>
   )

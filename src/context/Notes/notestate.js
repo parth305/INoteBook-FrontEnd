@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import modelcontext from "../Model/Modelcontext";
 import notecontext from "./notecontext";
 
 const Notestate = (props) => {
 
   let s =[];
   let [note, setnote] = useState(s);
+  let {title,description,tags}=useContext(modelcontext);
 
   let getnotes = async () => {
     let response=await fetch("http://localhost:5055/api/notes/getnotes", {
@@ -55,8 +57,25 @@ const Notestate = (props) => {
   }
 
   //Edit Note
-  let editnote = (id) => {
-    console.log(id)
+  let editnote = async (id) => {
+    let newnote = {
+      "title": title,
+      "description": description,
+      "tags": tags
+    }
+    let response=await fetch(`http://localhost:5055/api/notes/updatenote/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(newnote),
+      headers: {
+        "Content-type": "application/json",
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+      }
+    })
+
+    let data=await response.json();
+    console.log(data)
+    getnotes();
+
   }
 
   return (

@@ -3,16 +3,20 @@ import modelcontext from "./Modelcontext";
 
 let ModelState=(props)=>{
 
-    let [model,setmodel]=useState({edittitle:"TODO",editdescription:"TODO",edittags:"TODO",id:""});
+    let [title,settitle]=useState("");
+    let [description,setdescription]=useState("");
+    let [tags,settags]=useState("");
+    let [id,setid]=useState("")
 
     let updatemodel=(note)=>{
-
-        setmodel({edittitle:note.title,edittags:note.tags,editdescription:note.description,id:note._id})
-        // console.log(model);
+        setid(note._id);
+        setdescription(note.description);
+        settags(note.tags)
+        settitle(note.title);
     }
 
     return (
-        <modelcontext.Provider value={{model,updatemodel,setmodel}}>
+        <modelcontext.Provider value={{title,settitle,description,setdescription,tags,settags,id,updatemodel}}>
         {props.children}
         </modelcontext.Provider>
     )
