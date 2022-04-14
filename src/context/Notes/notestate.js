@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import alertcontext from "../Alerts/alertcontext";
 import modelcontext from "../Model/Modelcontext";
 import notecontext from "./notecontext";
 
@@ -7,7 +8,7 @@ const Notestate = (props) => {
   let s =[];
   let [note, setnote] = useState(s);
   let {title,description,tags}=useContext(modelcontext);
-
+  // let {showalert}=useContext(alertcontext);
   let getnotes = async () => {
     let response=await fetch("http://localhost:5055/api/notes/getnotes", {
       method: "GET",
@@ -18,7 +19,11 @@ const Notestate = (props) => {
     })
 
     let data=await response.json()
-    setnote(data)
+    if (!data.success){
+      // showalert("danger",)
+    }
+    console.log(data);
+    setnote(data.note)
   }
   //Add note
   let addnote = async (n) => {
@@ -37,6 +42,7 @@ const Notestate = (props) => {
     })
 
     let data=await response.json()
+    console.log(data);
     getnotes();
 
   }
@@ -73,7 +79,7 @@ const Notestate = (props) => {
     })
 
     let data=await response.json();
-    console.log(data)
+    console.log(data);
     getnotes();
 
   }

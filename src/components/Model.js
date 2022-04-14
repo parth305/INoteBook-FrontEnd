@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import modelcontext from '../context/Model/Modelcontext'
 import notecontext from '../context/Notes/notecontext';
 
 function Model() {
     let { title, settitle, description, setdescription, tags, settags, id } = useContext(modelcontext);
     let { editnote } = useContext(notecontext);
+    let refclose=useRef(null);
     let Changetitle = (event) => {
         settitle(event.target.value)
     }
@@ -41,8 +42,9 @@ function Model() {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" ref={refclose}className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" className="btn btn-primary" onClick={() => {
+                            refclose.current.click();
                             editnote(id)
                         }}>Update</button>
                     </div>
