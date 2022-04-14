@@ -9,9 +9,9 @@ function Notes() {
     },[])
     return (
         <>
- 
             <h3 className='my-3'>Your Notes</h3>
             <hr />
+            {note.length===0 && <h5>No Notes to show</h5>}
             <div id="showarea" className="notes row container-fluid">
                 {note.map((element => {
                     if (element) {

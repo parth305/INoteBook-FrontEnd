@@ -9,12 +9,14 @@ const Notestate = (props) => {
   let [note, setnote] = useState(s);
   let {title,description,tags}=useContext(modelcontext);
   let {showalert}=useContext(alertcontext);
+  let token=localStorage.getItem("token");
+  // console.log(token)
   let getnotes = async () => {
     let response=await fetch("http://localhost:5055/api/notes/getnotes", {
       method: "GET",
       headers: {
         "Content-type": "application/json;",
-        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+        "token":token
       }
     })
 
@@ -22,7 +24,7 @@ const Notestate = (props) => {
     if (!data.success){
       props.showalert("danger",data.error);
     }
-    console.log(data);
+    // console.log(data);
     setnote(data.note)
   }
   //Add note
@@ -37,12 +39,12 @@ const Notestate = (props) => {
       body: JSON.stringify(newnote),
       headers: {
         "Content-type": "application/json",
-        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+        "token":token
       }
     })
 
     let data=await response.json();
-    console.log(data);
+    // console.log(data);
     if(!data.success){
       props.showalert("danger",data.error)
     }
@@ -59,7 +61,7 @@ const Notestate = (props) => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
-        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+        "token":token
       }
     })
 
@@ -70,7 +72,7 @@ const Notestate = (props) => {
     else{
       showalert("success", "Deleted successfully")
     }
-    console.log(data);
+    // console.log(data);
     getnotes();
   }
 
@@ -86,7 +88,7 @@ const Notestate = (props) => {
       body: JSON.stringify(newnote),
       headers: {
         "Content-type": "application/json",
-        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTQzNDNlNTUxZTFmNWYxMjRlZjc4MSIsImlhdCI6MTY0OTc1MDIxNn0.G-M-v448F1pihZ3Yc22BudYvA4fYlXwwW5iIDweocP8"
+        "token":token
       }
     })
 
@@ -97,7 +99,7 @@ const Notestate = (props) => {
     else{
       showalert("success", "Edited successfully")
     }
-    console.log(data);
+    // console.log(data);
     getnotes();
 
   }
