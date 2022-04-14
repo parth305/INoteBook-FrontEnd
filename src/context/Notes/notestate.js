@@ -8,7 +8,7 @@ const Notestate = (props) => {
   let s =[];
   let [note, setnote] = useState(s);
   let {title,description,tags}=useContext(modelcontext);
-  // let {showalert}=useContext(alertcontext);
+  let {showalert}=useContext(alertcontext);
   let getnotes = async () => {
     let response=await fetch("http://localhost:5055/api/notes/getnotes", {
       method: "GET",
@@ -20,7 +20,7 @@ const Notestate = (props) => {
 
     let data=await response.json()
     if (!data.success){
-      // showalert("danger",)
+      props.showalert("danger",data.error);
     }
     console.log(data);
     setnote(data.note)
@@ -41,7 +41,13 @@ const Notestate = (props) => {
       }
     })
 
-    let data=await response.json()
+    let data=await response.json();
+    if(!data.success){
+      props.showalert("danger",data.error)
+    }
+    else{
+      props.showalert("success", "Note Added successfully")
+    }
     console.log(data);
     getnotes();
 
@@ -58,6 +64,12 @@ const Notestate = (props) => {
     })
 
     let data=await response.json()
+    if(!data.success){
+      props.showalert("danger",data.error)
+    }
+    else{
+      showalert("success", "Deelted successfully")
+    }
     console.log(data);
     getnotes();
   }
@@ -79,6 +91,12 @@ const Notestate = (props) => {
     })
 
     let data=await response.json();
+    if(!data.success){
+      props.showalert("danger",data.error)
+    }
+    else{
+      showalert("success", "Edited successfully")
+    }
     console.log(data);
     getnotes();
 

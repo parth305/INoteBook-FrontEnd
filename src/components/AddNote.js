@@ -3,13 +3,12 @@ import notecontext from '../context/Notes/notecontext'
 import alertcontext from "../context/Alerts/alertcontext";
 
 function AddNote() {
-    let { showalert } = useContext(alertcontext);
+    // let { showalert } = useContext(alertcontext);
     let {addnote}=useContext(notecontext);
     let [note,setNote]=useState({ title: "", description: "", tags: "" })
 
     let handleClick = (e) => {
         addnote(note);
-        showalert("success", "Note Added successfully")
         e.preventDefault()
     }
 
