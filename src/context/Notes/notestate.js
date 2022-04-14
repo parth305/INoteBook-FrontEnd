@@ -7,7 +7,7 @@ const Notestate = (props) => {
 
   let s =[];
   let [note, setnote] = useState(s);
-  let {title,description,tags}=useContext(modelcontext);
+  let {model}=useContext(modelcontext);
   let {showalert}=useContext(alertcontext);
   let token=localStorage.getItem("token");
   // console.log(token)
@@ -78,10 +78,11 @@ const Notestate = (props) => {
 
   //Edit Note
   let editnote = async (id) => {
+    
     let newnote = {
-      "title": title,
-      "description": description,
-      "tags": tags
+      "title": model.edittitle,
+      "description": model.editdescription,
+      "tags": model.edittags
     }
     let response=await fetch(`http://localhost:5055/api/notes/updatenote/${id}`, {
       method: "PUT",

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Notesitem from './Notesitem';
 import notecontext from '../context/Notes/notecontext'
 

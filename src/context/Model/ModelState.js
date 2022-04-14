@@ -3,20 +3,14 @@ import modelcontext from "./Modelcontext";
 
 let ModelState=(props)=>{
 
-    let [title,settitle]=useState("");
-    let [description,setdescription]=useState("");
-    let [tags,settags]=useState("");
-    let [id,setid]=useState("")
+    let [model,setmodel]=useState({edittitle:"",editpassword:"",edittags:"",_id:""})
 
     let updatemodel=(note)=>{
-        setid(note._id);
-        setdescription(note.description);
-        settags(note.tags)
-        settitle(note.title);
+        setmodel({edittitle:note.title,editdescription:note.description,edittags:note.tags,_id:note._id})
     }
 
     return (
-        <modelcontext.Provider value={{title,settitle,description,setdescription,tags,settags,id,updatemodel}}>
+        <modelcontext.Provider value={{model,setmodel,updatemodel}}>
         {props.children}
         </modelcontext.Provider>
     )
