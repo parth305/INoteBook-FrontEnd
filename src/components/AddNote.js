@@ -1,15 +1,22 @@
 import React, { useContext, useState } from 'react'
 import notecontext from '../context/Notes/notecontext'
-import alertcontext from "../context/Alerts/alertcontext";
 
 function AddNote() {
-    // let { showalert } = useContext(alertcontext);
     let {addnote}=useContext(notecontext);
     let [note,setNote]=useState({ title: "", description: "", tags: "" })
 
-    let handleClick = (e) => {
-        addnote(note);
-        e.preventDefault()
+    let handleClick = async (e) => {
+         addnote(note).then((result) => {
+             if(result){
+                setNote({ title: "", description: "", tags: "" });
+             }
+             else{
+                 setNote(note);
+             }
+        }).catch((err) => {
+            console.log("error in add note hande click")
+        });
+        e.preventDefault();
     }
 
     let Change = (event) => {
@@ -25,15 +32,15 @@ function AddNote() {
                     <div className="card-body">
                         <h5 className="card-title">Add Title</h5>
                         <div className="mb-3">
-                            <textarea className="form-control" id="addtitle" name="title" onChange={Change} rows="1"></textarea>
+                            <textarea className="form-control" id="addtitle" name="title" value={note.title} onChange={Change} rows="1"></textarea>
                         </div>
                         <h5 className="card-title">Add a Description</h5>
                         <div className="mb-3">
-                            <textarea className="form-control" id="addtxt" name="description" onChange={Change} rows="3"></textarea>
+                            <textarea className="form-control" id="addtxt" name="description" value={note.description} onChange={Change} rows="3"></textarea>
                         </div>
                         <h5 className="card-title">Add a Tag</h5>
                         <div className="mb-3">
-                            <textarea className="form-control" id="addtag" name="tags" onChange={Change} rows="1"></textarea>
+                            <textarea className="form-control" id="addtag" name="tags" value={note.tags} onChange={Change} rows="1"></textarea>
                         </div>
                         <button id="addbtn" className="btn btn-primary" onClick={handleClick}>Add Note</button>
                     </div>

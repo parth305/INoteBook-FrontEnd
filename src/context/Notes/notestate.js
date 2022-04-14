@@ -42,15 +42,15 @@ const Notestate = (props) => {
     })
 
     let data=await response.json();
+    console.log(data);
     if(!data.success){
       props.showalert("danger",data.error)
     }
     else{
       props.showalert("success", "Note Added successfully")
     }
-    console.log(data);
     getnotes();
-
+    return data.success
   }
 
   //Delete note
@@ -68,7 +68,7 @@ const Notestate = (props) => {
       props.showalert("danger",data.error)
     }
     else{
-      showalert("success", "Deelted successfully")
+      showalert("success", "Deleted successfully")
     }
     console.log(data);
     getnotes();
