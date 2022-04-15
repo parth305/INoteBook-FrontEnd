@@ -1,31 +1,43 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import alertcontext from "../Alerts/alertcontext";
 import modelcontext from "../Model/Modelcontext";
 import notecontext from "./notecontext";
 
 const Notestate = (props) => {
 
-  let s =[];
+  let s = [];
   let [note, setnote] = useState(s);
-  let {model}=useContext(modelcontext);
-  let {showalert}=useContext(alertcontext);
-  let token=localStorage.getItem("token");
+  let { model } = useContext(modelcontext);
+  let { showalert } = useContext(alertcontext);
+  let token = localStorage.getItem("token");
+  let nevigate=useNavigate();
   // console.log(token)
   let getnotes = async () => {
-    let response=await fetch("http://localhost:5055/api/notes/getnotes", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json;",
-        "token":token
-      }
-    })
+    try {
+      let response = await fetch("http://localhost:5055/api/notes/getnotes", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json;",
+          "token": token
+        }
+      })
 
-    let data=await response.json()
-    if (!data.success){
-      props.showalert("danger",data.error);
+      let data = await response.json()
+      if (!data.success) {
+        props.showalert("danger", data.error);
+        // setnote([])
+        nevigate("/login")
+      }
+      else{
+      console.log("data",data);
+      setnote(data.note)
+      
+      }
+    } catch (exeption) {
+      // setnote([])
+      console.log(exeption)
     }
-    // console.log(data);
-    setnote(data.note)
   }
   //Add note
   let addnote = async (n) => {
@@ -34,21 +46,21 @@ const Notestate = (props) => {
       "description": n.description,
       "tags": n.tags
     }
-    let response=await fetch("http://localhost:5055/api/notes/addnote", {
+    let response = await fetch("http://localhost:5055/api/notes/addnote", {
       method: "POST",
       body: JSON.stringify(newnote),
       headers: {
         "Content-type": "application/json",
-        "token":token
+        "token": token
       }
     })
 
-    let data=await response.json();
+    let data = await response.json();
     // console.log(data);
-    if(!data.success){
-      props.showalert("danger",data.error)
+    if (!data.success) {
+      props.showalert("danger", data.error)
     }
-    else{
+    else {
       props.showalert("success", "Note Added successfully")
     }
     getnotes();
@@ -57,19 +69,19 @@ const Notestate = (props) => {
 
   //Delete note
   let deletenote = async (id) => {
-    let response=await fetch(`http://localhost:5055/api/notes/deletenote/${id}`, {
+    let response = await fetch(`http://localhost:5055/api/notes/deletenote/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
-        "token":token
+        "token": token
       }
     })
 
-    let data=await response.json()
-    if(!data.success){
-      props.showalert("danger",data.error)
+    let data = await response.json()
+    if (!data.success) {
+      props.showalert("danger", data.error)
     }
-    else{
+    else {
       showalert("success", "Deleted successfully")
     }
     // console.log(data);
@@ -78,26 +90,26 @@ const Notestate = (props) => {
 
   //Edit Note
   let editnote = async (id) => {
-    
+
     let newnote = {
       "title": model.edittitle,
       "description": model.editdescription,
       "tags": model.edittags
     }
-    let response=await fetch(`http://localhost:5055/api/notes/updatenote/${id}`, {
+    let response = await fetch(`http://localhost:5055/api/notes/updatenote/${id}`, {
       method: "PUT",
       body: JSON.stringify(newnote),
       headers: {
         "Content-type": "application/json",
-        "token":token
+        "token": token
       }
     })
 
-    let data=await response.json();
-    if(!data.success){
-      props.showalert("danger",data.error)
+    let data = await response.json();
+    if (!data.success) {
+      props.showalert("danger", data.error)
     }
-    else{
+    else {
       showalert("success", "Edited successfully")
     }
     // console.log(data);
@@ -106,7 +118,7 @@ const Notestate = (props) => {
   }
 
   return (
-    <notecontext.Provider value={{ note, addnote, deletenote, editnote,getnotes }}>
+    <notecontext.Provider value={{ note, addnote, deletenote, editnote, getnotes }}>
       {props.children}
     </notecontext.Provider>
   )
